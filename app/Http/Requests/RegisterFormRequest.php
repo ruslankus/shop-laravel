@@ -4,8 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-
-class ContactFormRequest extends Request
+class RegisterFormRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class ContactFormRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,13 +24,13 @@ class ContactFormRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email',
-            'message' => 'required',
+            'name' => 'required|max:255',
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip' => 'required',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6'
         ];
-
-        //sending mail
-
-        return \Redirect::route('contact')->with('message', 'Thanks for contacting us!');
     }
 }
